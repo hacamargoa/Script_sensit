@@ -1,11 +1,6 @@
-source("C:/Users/hac809/Desktop/Sensitivity2/ANOVA.R")
-library(data.table)
-#library(DescTools)
-library(stringi)
-#library(gcookbook)
-#library(plotly)
+source("ANOVA_YI.R")
 
-#Maize1
+#Maize
 plotH<-list()
 ANOVA<-list()
 for (j in c("Medium","High")){
@@ -21,7 +16,7 @@ SSperc<-data.frame(effects=names(yield_d2CO)[2:9])
 for (i in names(yield_d2CO_2)[2:9]){
   temp<- subset(AOVdf,effects==i)
   temp2<-AOVdf[-c(1:9,length(AOVdf$`Sum Sq`)),]
-  temp3<-temp2[temp2$effects %like% i, ]
+  temp3<-temp2[temp2$effects %like% paste0("%",i,"%"), ]
   SSperc[SSperc$effects==i,2]<-(temp$`Sum Sq`/total)*100
   SSperc[SSperc$effects==i,3]<-(sum(temp3$`Sum Sq`)/total)*100
 }
@@ -52,7 +47,7 @@ for (j in c("Medium","High")){
   for (i in names(HI_d2WW_2)[2:9]){
     temp<- subset(AOVdf,effects==i)
     temp2<-AOVdf[-c(1:9,length(AOVdf$`Sum Sq`)),]
-    temp3<-temp2[temp2$effects %like% i, ]
+    temp3<-temp2[temp2$effects %like% paste0("%",i,"%"), ]
     SSperc[SSperc$effects==i,2]<-(temp$`Sum Sq`/total)*100
     SSperc[SSperc$effects==i,3]<-(sum(temp3$`Sum Sq`)/total)*100
   }

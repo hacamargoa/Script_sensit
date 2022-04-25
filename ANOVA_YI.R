@@ -5,9 +5,10 @@ library(stringi)
 
 coord<-unique(HI_d2CO2[c("Lon","Lat")])
 coord$loc<-seq(1:22)
-#Maize1
+#Maize
 plotA<-list()
 ANOVAy<-list()
+##loop for each group to Run an ANOVA to evaluate the effect of the parameters on the variability
 for (j in c("Medium","High")){
 yield_d2CO_2<-subset(yield_d2CO2,Group==j)
 yield_d2CO_2<-join(yield_d2CO_2,coord)
@@ -18,10 +19,11 @@ setDT(AOVdf,keep.rownames = TRUE);names(AOVdf)[1]<-"effects"
 AOVdf$effects<-stri_replace_all_fixed(AOVdf$effects," ", "")
 total<-sum(AOVdf$`Sum Sq`[-c(1,length(AOVdf$`Sum Sq`))])
 SSperc<-data.frame(effects=names(yield_d2CO)[2:9])
+#loop to obtain the sum of squares of single effect and the summatory of all the interactions for each parameter
 for (i in names(yield_d2CO_2)[2:9]){
   temp<- subset(AOVdf,effects==i)
   temp2<-AOVdf[-c(1:9,length(AOVdf$`Sum Sq`)),]
-  temp3<-temp2[temp2$effects %like% i,]
+  temp3<-temp2[temp2$effects %like% paste0("%",i,"%"),]
   SSperc[SSperc$effects==i,2]<-(temp$`Sum Sq`/total)*100
   SSperc[SSperc$effects==i,3]<-(sum(temp3$`Sum Sq`)/total)*100
 }
@@ -53,7 +55,7 @@ for (j in c("Medium","High")){
   for (i in names(yield_d2WW_2)[2:9]){
     temp<- subset(AOVdf,effects==i)
     temp2<-AOVdf[-c(1:9,length(AOVdf$`Sum Sq`)),]
-    temp3<-temp2[temp2$effects %like% i, ]
+    temp3<-temp2[temp2$effects %like% paste0("%",i,"%"), ]
     SSperc[SSperc$effects==i,2]<-(temp$`Sum Sq`/total)*100
     SSperc[SSperc$effects==i,3]<-(sum(temp3$`Sum Sq`)/total)*100
   }
