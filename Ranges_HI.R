@@ -1,18 +1,15 @@
 source("Ranges_YI.R")
-library(plyr)
-library(dplyr)
-library(ggplot2)
-library(gridExtra)
-library(grid)
 
-HI_d2COa<-read.table("HICO.out",h=T);HI_d2COa$Sret=1
-HI_d2COb<-read.table("HICO_nort.out",h=T);HI_d2COb$Sret=0
+##This script makes the same process of Ranges_Yi.R but for harvest index instead than yield
+
+##Maize
+HI_d2COa<-read.table("inputs/Maize/HICO.out",h=T);HI_d2COa$Sret=1
+HI_d2COb<-read.table("inputs/Maize/HICO_nort.out",h=T);HI_d2COb$Sret=0
 HI_d2CO<-rbind(HI_d2COa,HI_d2COb);
 HI_d2CO<-HI_d2CO %>% relocate(Sret, .before = SLA)
 HI_d2CO2<-join(HI_d2CO,yield_av[,c(1,2,4)])
 
 for (j in c("Medium","High")){
-#range bars Maize
 plotf<-list()
 HI.summary<-list()
 HI_d2CO_2<-subset(HI_d2CO2,Group==j)
@@ -54,13 +51,13 @@ for (i in names(HI_d2CO_2)[2:9]){
 }
 
 #wheat
-HI_d2WWa<-read.table("HIWW.out",h=T);HI_d2WWa$Sret=1
+HI_d2WWa<-read.table("inputs/Wheat/HIWW.out",h=T);HI_d2WWa$Sret=1
 HI_d2WWa<-HI_d2WWa[,-c(9:15)]
-HI_d2WWb<-read.table("HIWW_nort.out",h=T);HI_d2WWb$Sret=0
+HI_d2WWb<-read.table("inputs/Wheat/HIWW_nort.out",h=T);HI_d2WWb$Sret=0
 HI_d2WWb<-HI_d2WWb[,-c(9:15)]
 HI_d2WW<-rbind(HI_d2WWa,HI_d2WWb);
 HI_d2WW<-HI_d2WW %>% relocate(Sret, .before = SLA)
-HI_d2WW2<-join(HI_d2WW,coordw)
+HI_d2WW2<-join(HI_d2WW,coordW)
 HI_d2WW2$TeWi<-ifelse(HI_d2WW2$wheat=="Spring",HI_d2WW2$TeSWi,HI_d2WW2$TeWWi)
 HI_d2WW2$TeW<-ifelse(HI_d2WW2$wheat=="Spring",HI_d2WW2$TeSW,HI_d2WW2$TeWW)
 HI_avw<-aggregate(TeWi~Lon+Lat,HI_d2WW2,mean);
