@@ -10,3 +10,4 @@ All the functions are performed for Maize and Wheat
 -ANOVA_YI.R and ANOVA_HI.R: Run an analysis of variance to evaluate the variability assigned to parameters single effect and interactions for yield and harvest index, respectively. also graph the results
 -Senescheck.R: Function to calculate the number of locations per setup with greater than 70% in maize and 50% in wheat of leaves senesced, separately for rainfed and irrigated
 -Cost_functions.R:This function masks the LPJ-GUESS output according to the harvested area and calculates the difference against Ray and FAO reference data. Also constrain the datasets to those producing aceptable senescense and harvest index. Finally optimises the difference to find the best setups to simulate yield. 
+

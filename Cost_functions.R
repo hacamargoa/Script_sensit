@@ -105,6 +105,7 @@ HIw$HTeW=(HIw$TeW*HIw$Arear+HIw$TeWi*HIw$Areai)/(HIw$Areai+HIw$Arear)
 Yi_HIw=join(YieldW[,c(1:11,25:28)],HIw[,c(1:11,26)])
 Yi_HIw=join(Yi_HIw,summw)
 
+
 ###Quantile 80th of Distance for both reference yields and Spring and winter wheat per setup
 ###Mean value of harvest index per cultivar and setup
 
@@ -121,8 +122,10 @@ for (i in SSE_3w$Num){
 SSE3w<-join(SSE_3w,Yi_HIw[,c(1:9)],match='first')
 SSE3w<-join(SSE3w,summw)
 
+
 #Constraining setups to locations with more than 50% of locations with senescense and mean harvest index inside limits
 #Compiling the setups with lowest difference against reference and the average of parameters for best 10 setups per cultivar
+
 Temp<-subset(SSE3w,PercWWi>10)
 WheatAv<-data.frame(matrix(ncol=9))
 WheatBest<-data.frame(matrix(ncol=9))
