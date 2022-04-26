@@ -1,11 +1,4 @@
 source("Senescheck.R")
-#library(FactoMineR)
-#library(missMDA)
-#library(ca)
-#library(ncdf4)
-#library(raster)
-#library(rworldmap)
-#library(ltm)
 library(devtools)
 install_github('sinhrks/ggfortify')
 library(ggfortify)
@@ -81,6 +74,7 @@ SSE2m<-join(SSE_3,Yi_HIm[,c(1:9)],match='first')
 SSE2m<-join(SSE2m,summ)
 
 #Constraining setups to locations with more than 50% of locations with senescense and mean harvest index inside limits
+#Compiling the setups with lowest difference against reference and the average of parameters for best 10 setups per cultivar
 Temp<-subset(SSE2m,sen_loc_ir>11&HIav_CL1<=0.59&HIav_CL2>=0.3)
 Temp<-Temp[,c(-6,-7)]
 MaizAv<-data.frame(matrix(ncol=9))
@@ -111,6 +105,10 @@ HIw$HTeW=(HIw$TeW*HIw$Arear+HIw$TeWi*HIw$Areai)/(HIw$Areai+HIw$Arear)
 Yi_HIw=join(YieldW[,c(1:11,25:28)],HIw[,c(1:11,26)])
 Yi_HIw=join(Yi_HIw,summw)
 
+
+###Quantile 80th of Distance for both reference yields and Spring and winter wheat per setup
+###Mean value of harvest index per cultivar and setup
+
 SSE_3w<-data.frame("Num"=1)
 SSE_3w<-as.data.frame(seq(1:17280));names(SSE_3w)[1]<-"Num"
 for (i in SSE_3w$Num){
@@ -124,6 +122,9 @@ for (i in SSE_3w$Num){
 SSE3w<-join(SSE_3w,Yi_HIw[,c(1:9)],match='first')
 SSE3w<-join(SSE3w,summw)
 
+
+#Constraining setups to locations with more than 50% of locations with senescense and mean harvest index inside limits
+#Compiling the setups with lowest difference against reference and the average of parameters for best 10 setups per cultivar
 
 Temp<-subset(SSE3w,PercWWi>10)
 WheatAv<-data.frame(matrix(ncol=9))
